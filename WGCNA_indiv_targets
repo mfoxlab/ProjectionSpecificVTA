@@ -144,6 +144,9 @@ for (module in moduleNames) {
 write.table(topHubGenesList, "tophubgeneslist_pfc.txt", sep="\t", row.names=FALSE)
 
 
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #alternative strategy to determine fentanyl associated modules 
 
 
@@ -167,9 +170,15 @@ results <- topTable(fit, coef="ConditionFENT", number=nrow(eigengenes_df))
 results$ModuleEigengene <- rownames(results)
 results$ensembl_gene_id <- sapply(rownames(results), function(x) hub_genes[x]) 
 
-
+#annotate with mgi_symbols
 results_annotated <- merge(results, ann, by.x="ensembl_gene_id", by.y="ensembl_gene_id", all.x=TRUE)
-
+        
+##note ann is from a previous workspace-- used because of biomart problemes 
+        ##library(biomaRt)
+        ## mart = useMart("ensembl") 
+       ##mart = useDataset("mmusculus_gene_ensembl", mart) 
+       ##ann = getBM(mart = mart, attributes = c("ensembl_gene_id", "mgi_symbol", "gene_biotype", "description"), filters = "ensembl_gene_id", values = rownames(logcpm))
+       ## ann = ann[duplicated(ann$ensembl_gene_id) == F, ]
 
 write.table(results_annotated, "PFCmoduleEigengenesDE.txt", sep="\t", row.names=FALSE)
 
