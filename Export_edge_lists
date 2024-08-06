@@ -1,0 +1,52 @@
+library(reshape2)
+library(dplyr)
+library(WGCNA)
+allowWGCNAThreads()
+
+path_to_files <- getwd() ## this is my current path but it may change for you
+file_prefix <- "TOM.PFC" ## change this to the name of your TOM file
+files <- list.files( path = path_to_files, pattern = paste0(file_prefix, "-block.*\\.RData$"), full.names = TRUE )
+
+load(file= "netPFC_9.Rdata")
+gene_names<-names(netPFC_9$colors)
+
+# Initialize an empty list to store edge lists
+all_edges <- list()
+
+# Loop through each file, load it, convert to edge list, and append to the list
+for (file in files) {
+  # Load the RData file
+  load(file)
+  
+  # Convert 'dist' object to matrix
+  if (exists("TOM")) {
+    TOM_matrix <- as.matrix(TOM)
+    diag(TOM_matrix) <- NA
+    
+    # Convert matrix to edge list and remove low weight
+    TOM_melted <- melt(TOM_matrix, na.rm = TRUE)
+    colnames(TOM_melted) <- c("Source", "Target", "Weight")
+     TOM_melted <- TOM_melted[TOM_melted$Weight > 0.1, ]
+    
+    
+    # Remove self-loops
+    TOM_melted <- TOM_melted[TOM_melted$Source != TOM_melted$Target, ]
+    
+    # Append the edge list to the list
+    all_edges[[basename(file)]] <- TOM_melted
+  } else {
+    warning(paste("No TOM matrix found in file:", file))
+  }
+}
+# Combine all edge lists into a single data frame
+combined_edges <- do.call(rbind, all_edges)
+
+
+combined_edges$Source <- gene_names[as.numeric(combined_edges$Source)] 
+combined_edges$Target <- gene_names[as.numeric(combined_edges$Target)]
+
+# Add a column to the combined_edges to indicate that these are edges
+combined_edges$Type <- "Edge"
+
+# Export the combined data frame to a CSV file
+write.csv(combined_edges, "PFC_edges.csv", row.names = FALSE)
