@@ -104,6 +104,21 @@ save(geneModuleMembership, file="PFC_gene_module_membership.Rdata")
 
 netGenes= data.frame(ensembl_gene_id = colnames(logcpm_PFC_sig), module.PFC = netPFC_9$colors)
 
+
+# Convert membership matrix to data frame for easy joining 
+membership_df <- as.data.frame(geneModuleMembership$membership, stringsAsFactors = FALSE)
+membership_df$ensembl_gene_id <- rownames(membership_df)
+
+
+outp <- DEsPFC %>%
+  full_join(netGenes, by = "ensembl_gene_id") %>%
+  full_join(membership_df, by = "ensembl_gene_id") 
+
+
+# Export the data 
+write.table(outp, "PFC_gene_summary.txt", sep = "\t", row.names = FALSE)
+
+
 # find hub genes 
  
 ensembl <- useMart("ensembl", dataset = "mmusculus_gene_ensembl")
