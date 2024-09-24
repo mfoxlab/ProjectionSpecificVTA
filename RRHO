@@ -1,6 +1,6 @@
 load ("DEoutputNOP.Rdata")
 
-# Iterate over each dataframe in DEoutp to create separate matching gene lists 
+# Iterate over each dataframe in DEoutp to create individual lists 
 for (df_name in names(DEoutp)) {
   # Get the dataframe
   df <- DEoutp[[df_name]]
@@ -17,6 +17,9 @@ for (df_name in names(DEoutp)) {
     if (logfc_col %in% colnames(df)) {
       new_obj <- df[, c("ensembl_gene_id", pval_col, logfc_col)]
       
+      # Rename the P.Value and logFC columns for easy use later 
+      colnames(new_obj) <- c("ensembl_gene_id", "P.Value", "logFC")
+      
       # Assign a name to the new object based on the P.Value column
       new_obj_name <- gsub("P\\.Value_", "", pval_col)
       
@@ -25,3 +28,4 @@ for (df_name in names(DEoutp)) {
     }
   }
 }
+
