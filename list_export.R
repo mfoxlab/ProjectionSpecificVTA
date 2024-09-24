@@ -1,0 +1,142 @@
+workdir = "/Users/hsohail/OneDrive - Penn State Health/Documents/WGCNA/RRHO"
+setwd(workdir)
+
+load(file = paste0(workdir,"/DEoutputNOP.Rdata"))
+
+
+# Create new lists containing only ensembl_gene_id and RRHO
+for (df_name in names(DEoutp)) {
+  # Get the dataframe
+  df <- DEoutp[[df_name]]
+  
+  # Get all P.Value columns
+  pval_columns <- grep("^P\\.Value_", colnames(df), value = TRUE)
+  
+  # Loop through each P.Value column
+  for (pval_col in pval_columns) {
+    # Extract the logFC column name corresponding to the P.Value column
+    logfc_col <- gsub("P\\.Value_", "logFC_", pval_col)
+    
+    # If the logFC column exists, proceed
+    if (logfc_col %in% colnames(df)) {
+      new_obj <- df[, c("ensembl_gene_id", pval_col, logfc_col)]
+      
+      # Rename the P.Value and logFC columns for easy use later
+      colnames(new_obj) <- c("ensembl_gene_id", "P.Value", "logFC")
+      
+      # Calculate RRHO as log(P.Value) * sign(logFC)
+      new_obj$RRHO <- -log10(new_obj$P.Value) * sign(new_obj$logFC)
+      
+      # Create a new dataframe with only ensembl_gene_id and RRHO
+      rrho_obj <- data.frame(Genes = new_obj$ensembl_gene_id, DDE = new_obj$RRHO)
+      
+      # Assign a name to the new object based on the P.Value column
+      rrho_obj_name <- paste0("RRHO_", gsub("P\\.Value_", "", pval_col))
+      
+      # Save the new object in the environment
+      assign(rrho_obj_name, rrho_obj)
+    }
+  }
+}
+
+
+
+AMYFMRRHO <- RRHO2_initialize(RRHO_AMY_F_FENT,RRHO_AMY_M_FENT, labels=c("FEM AMY","MALE AMY"), log10.ind=TRUE)
+NACFMRRHO <- RRHO2_initialize(RRHO_NAC_F_FENT,RRHO_NAC_M_FENT, labels=c("FEM NAC","MALE NAC"), log10.ind=TRUE)
+PFCFMRRHO <- RRHO2_initialize(RRHO_PFC_F_FENT,RRHO_PFC_M_FENT, labels=c("FEM PFC","MALE PFC"), log10.ind=TRUE)
+INPUTFMRRHO <- RRHO2_initialize(RRHO_INPUT_F_FENT,RRHO_INPUT_M_FENT, labels=c("FEM INPUT","MALE INPUT"), log10.ind=TRUE)
+
+AMYNACFENTRRHO <- RRHO2_initialize(RRHO_AMY_FENT,RRHO_NAC_FENT, labels=c("AMY FENT","NAC FENT"), log10.ind=TRUE)
+AMYPFCFENTRRHO <- RRHO2_initialize(RRHO_AMY_FENT,RRHO_PFC_FENT, labels=c("AMY FENT","PFC FENT"), log10.ind=TRUE)
+AMYINPUTFENTRRHO <- RRHO2_initialize(RRHO_AMY_FENT,RRHO_INPUT_FENT, labels=c("AMY FENT","INPUT FENT"), log10.ind=TRUE)
+
+NACPFCFENTRRHO <- RRHO2_initialize(RRHO_NAC_FENT,RRHO_PFC_FENT, labels=c("NAC FENT","PFC FENT"), log10.ind=TRUE)
+NACINPUTFENTRRHO <- RRHO2_initialize(RRHO_NAC_FENT,RRHO_INPUT_FENT, labels=c("NAC FENT","INPUT FENT"), log10.ind=TRUE)
+
+PFCINPUTFENTRRHO <- RRHO2_initialize(RRHO_PFC_FENT,RRHO_INPUT_FENT, labels=c("PFC FENT","INPUT FENT"), log10.ind=TRUE)
+
+
+#EXTRA RRHOs
+NACPFCMRRHO <- RRHO2_initialize(RRHO_NAC_M_FENT,RRHO_PFC_M_FENT, labels=c("MALE NAC","MALE PFC"), log10.ind=TRUE)
+NACAMYMRRHO <- RRHO2_initialize(RRHO_NAC_M_FENT,RRHO_AMY_M_FENT, labels=c("MALE NAC","MALE AMY"), log10.ind=TRUE)
+NACINPUTMRRHO <- RRHO2_initialize(RRHO_NAC_M_FENT,RRHO_INPUT_M_FENT, labels=c("MALE NAC","MALE INPUT"), log10.ind=TRUE)
+NACINPUTFRRHO <- RRHO2_initialize(RRHO_NAC_F_FENT,RRHO_INPUT_F_FENT, labels=c("FEM NAC","FEM INPUT"), log10.ind=TRUE)
+
+NACAMYFRRHO <- RRHO2_initialize(RRHO_NAC_F_FENT,RRHO_AMY_F_FENT, labels=c("FEM NAC","FEM AMY"), log10.ind=TRUE)
+NACPFCFRRHO <- RRHO2_initialize(RRHO_NAC_F_FENT,RRHO_PFC_F_FENT, labels=c("FEM NAC","FEM PFC"), log10.ind=TRUE)
+
+
+
+pdf("AMYFM_RRHO.pdf", width = 9.5, height = 7)
+RRHO2_heatmap(AMYFMRRHO)
+dev.off() 
+
+pdf("NACFM_RRHO.pdf", width = 9.5, height = 7)
+RRHO2_heatmap(NACFMRRHO)
+dev.off()
+
+pdf("PFCFM_RRHO.pdf", width = 9.5, height = 7)
+RRHO2_heatmap(PFCFMRRHO)
+dev.off()
+
+pdf("INPUTFM_RRHO.pdf", width = 9.5, height = 7)
+RRHO2_heatmap(INPUTFMRRHO)
+dev.off()
+
+
+pdf("AMYNACFENT_RRHO.pdf", width = 9.5, height = 7)
+RRHO2_heatmap(AMYNACFENTRRHO)
+dev.off()
+
+pdf("AMYPFCFENT_RRHO.pdf", width = 9.5, height = 7)
+RRHO2_heatmap(AMYPFCFENTRRHO)
+dev.off()
+
+pdf("AMYINPUTFENT_RRHO.pdf", width = 9.5, height = 7)
+RRHO2_heatmap(AMYINPUTFENTRRHO)
+dev.off()
+
+
+pdf("NACPFCFENT_RRHO.pdf", width = 9.5, height = 7)
+RRHO2_heatmap(NACPFCFENTRRHO)
+dev.off()
+
+pdf("NACINPUTFENT_RRHO.pdf", width = 9.5, height = 7)
+RRHO2_heatmap(NACINPUTFENTRRHO)
+dev.off()
+
+
+pdf("PFCINPUTFENT_RRHO.pdf", width = 9.5, height = 7)
+RRHO2_heatmap(PFCINPUTFENTRRHO)
+dev.off()
+
+
+# Other RRHOs
+pdf("NACPFCM_RRHO.pdf", width = 9.5, height = 7)
+RRHO2_heatmap(NACPFCMRRHO)
+dev.off()
+
+pdf("NACAMYM_RRHO.pdf", width = 9.5, height = 7)
+RRHO2_heatmap(NACAMYMRRHO)
+dev.off()
+
+pdf("NACINPUTM_RRHO.pdf", width = 9.5, height = 7)
+RRHO2_heatmap(NACINPUTMRRHO)
+dev.off()
+
+pdf("NACINPUTF_RRHO.pdf", width = 9.5, height = 7)
+RRHO2_heatmap(NACINPUTFRRHO)
+dev.off()
+
+
+pdf("NACAMYF_RRHO.pdf", width = 9.5, height = 7)
+RRHO2_heatmap(NACAMYFRRHO)
+dev.off()
+
+pdf("NACPFCF_RRHO.pdf", width = 9.5, height = 7)
+RRHO2_heatmap(NACPFCFRRHO)
+dev.off()
+
+ 
+save.image(file = paste0(workdir,"/list_export_Workspace.Rdata"))
+ 
