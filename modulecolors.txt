@@ -1,0 +1,162 @@
+Module	Color						
+ME1	#DAF7A6						
+ME2	#FFC300						
+ME3	#C70039						
+ME4	#581845						
+ME5	#8cce20						
+ME6	#351717						
+ME7	#9e2d7f						
+ME8	#5aa2c9						
+ME9	#7cd55c						
+ME10	#06e779						
+ME11	#a3cba1						
+ME12	#f25081						
+ME13	#50f8e2						
+ME14	#8f1507						
+ME15	#3761f2						
+ME16	#a8ab87						
+ME17	#52fe1a						
+ME18	#37de00						
+ME19	#6a4db3						
+ME20	#bc2028						
+ME21	#f3d60c						
+ME22	#a859e1						
+ME23	#97ba13						
+ME24	#51a8c7						
+ME25	#6e7da6						
+ME26	#26da9b						
+ME27	#f1624c						
+ME28	#e8539a						
+ME29	#d07f13						
+ME30	#28aad6						
+ME31	#0822d4						
+ME32	#28187f						
+ME33	#47526d						
+ME34	#a8ec69						
+ME35	#369561						
+ME36	#7f135f						
+ME37	#25cd59						
+ME38	#bdc6e6						
+ME39	#3fc4ba						
+ME40	#f68683						
+ME41	#d7dab3						
+ME42	#96727b						
+ME43	#41316b						
+ME44	#4eed7f						
+ME45	#01fd82						
+ME46	#ee4b19						
+ME47	#779019						
+ME48	#630d75						
+ME49	#5943d6						
+ME50	#cdc9a8						
+ME51	#ab610f						
+ME52	#85fc7b						
+ME53	#a9c7ac						
+ME54	#43800d						
+ME55	#bc32b5						
+ME56	#536894						
+ME57	#80cd3b						
+ME58	#ba68d6						
+ME59	#91ba8f						
+ME60	#6704b3						
+ME61	#3f455a						
+ME62	#408f44						
+ME63	#d191f4						
+ME64	#dc3f19						
+ME65	#7ce1f1						
+ME66	#60d6bb						
+ME67	#81e1ed						
+ME68	#e7989b						
+ME69	#a7b22f						
+ME70	#ebdba1						
+ME71	#ccda4c						
+ME72	#f04832						
+ME73	#2a39aa						
+ME74	#56e6d5						
+ME75	#65babc						
+ME76	#5060ff						
+ME77	#4c91f5						
+ME78	#797545						
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
