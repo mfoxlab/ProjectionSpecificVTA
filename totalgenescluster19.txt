@@ -1,0 +1,1 @@
+ensembl_gene_id	mgi_symbol	gene_biotype	description	PFC.P.Value_PFC_FENT	PFC.logFC_PFC_FENT	AMY.P.Value_AMY_FENT	AMY.logFC_AMY_FENT	INPUT.P.Value_INPUT_FENT	INPUT.logFC_INPUT_FENT	NAC.P.Value_NAC_FENT	NAC.logFC_NAC_FENT	cell_type	avg_logFC	p_val	p_val_adj	de_family	de_method	de_type
